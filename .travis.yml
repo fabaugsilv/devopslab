@@ -15,12 +15,24 @@ script:
 
 # Definir o Deploy no Heroku
 deploy:
-  provider: heroku
-  api_key: $HEROKU_API_KEY
-  edge: true 
-  app: devopslab-fabaugsilv
-  on:
+  - provider: heroku
+    api_key: $HEROKU_API_KEY
+    edge: true 
+    app: devopslab-fabaugsilv
+    on:
+        branch: main
+    strategy: api
+  - provider: gae
+    keyfile: ../directed-cove-314122-7ae0c53644cd.json
+    project: directed-cove-314122
+    on:
       branch: main
-  strategy: api
+
 dist: xenial
 os: linux
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_bcaacc18a63a_key -iv $encrypted_bcaacc18a63a_iv
+  -in directed-cove-314122-7ae0c53644cd.json.enc -out ../directed-cove-314122-7ae0c53644cd.json
+  -d
+
