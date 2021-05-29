@@ -21,3 +21,6 @@ deploy:
   app: devopslab-fabaugsilv
   on:
       branch: main
+  strategy: api
+dist: xenial
+os: linux
