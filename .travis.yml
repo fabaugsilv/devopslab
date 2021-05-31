@@ -13,6 +13,11 @@ before_install:
   -in directed-cove-314122-7ae0c53644cd.json.enc -out ../directed-cove-314122-7ae0c53644cd.json
   -d
 
+addons:
+  sonarcloud:
+    organization: fabaugsilv
+    token: ${SONAR_TOKEN}
+
 jobs:
   include:
     - stage: Build
@@ -25,6 +30,7 @@ jobs:
         - coverage run test.py || travis_terminate 1;
         - coverage report app.py || travis_terminate 1;
         - coverage xml app.py || travis_terminate 1;
+        - sonar-scanner || travis_terminate 1;
 
     - stage: STG Deploy
       script: skip
